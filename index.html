@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title> Rob Neal's Javascript Drum Kit </title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<h1> Robert's Javascript Drum Kit </h1>
+	<div class="drumset">
+		
+		<div data-key="82" class="key">
+			<kbd>R</kbd>
+			<span class="sound">clap</span>
+		</div>
+
+		<div data-key="79" class="key">
+			<kbd>O</kbd>
+			<span class="sound">hihat</span>
+		</div>
+		
+		<div data-key="66" class="key">
+			<kbd>B</kbd>
+			<span class="sound">kick</span>
+		</div>
+
+
+
+		<div data-key="32" class="key">
+    		<kbd>_</kbd>
+    		<span class="sound">tink</span>
+    	</div>
+
+
+
+		<div data-key="78" class="key">
+			<kbd>N</kbd>
+			<span class="sound">boom</span>
+		</div>
+		
+		<div data-key="69" class="key">
+      		<kbd>E</kbd>
+      		<span class="sound">ride</span>
+    	</div>
+
+    	<div data-key="65" class="key">
+    		<kbd>A</kbd>
+    		<span class="sound">snare</span>
+    	</div>
+
+    	<div data-key="76" class="key">
+    		<kbd>L</kbd>
+    		<span class="sound">tom</span>
+    	</div>
+    	
+		<!--
+		<div data-key="51" class="key">
+    		<kbd>3</kbd>
+    		<span class="sound">openhat</span>
+    	</div> -->
+	</div>
+
+	<p class="instructionText">Press the keys above to play the drumset</p>
+	<p class="githubText"> Checkout the code on my <a href="robneal.github.io/drumkit">GitHub</a> </p>
+
+  <audio data-key="82" src="sounds/clap.wav"></audio>
+  <audio data-key="79" src="sounds/hihat.wav"></audio>
+  <audio data-key="66" src="sounds/kick.wav"></audio>
+
+  <audio data-key="32" src="sounds/tink.wav"></audio>
+  
+  <audio data-key="78" src="sounds/boom.wav"></audio>
+  <audio data-key="69" src="sounds/ride.wav"></audio>
+  <audio data-key="65" src="sounds/snare.wav"></audio>
+  <audio data-key="76" src="sounds/tom.wav"></audio>
+
+ <!--  <audio data-key="51" src="sounds/openhat.wav"></audio> -->
+
+
+  <script>
+  	console.log("Javascript is (t)wreking!"); 
+
+  	function removeTransition(event) {
+    	if (event.propertyName !== 'transform') return;
+    	event.target.classList.remove('playing');
+  	}
+
+  	function playSound(event) {
+ 		// ES6 Version ~> const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+
+  		const audioString = 'audio[data-key="' + event.keyCode + '"]'; 
+  		const divClassString = '.key[data-key="' + event.keyCode + '"]';
+  		const audio = document.querySelector(audioString);
+  		const key = document.querySelector(divClassString);
+  		// DEBUGGING ~	console.log(key);
+  		
+  		if(!audio) return; 
+  		audio.currentTime = 0; // Rewinds the audio
+  		audio.play();
+  		key.classList.add('playing');
+  	}
+
+
+  	const keys = document.querySelectorAll('.key');
+ 	keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+ 	window.addEventListener('keydown', playSound);
+
+  </script>
+
+
+</body>
+</html>
